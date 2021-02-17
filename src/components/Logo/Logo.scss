@@ -1,0 +1,17 @@
+@import "../variables";
+
+.mainColor {
+    color: $logoColorMain;
+}
+
+.secondColor {
+    color: $logoColorSecond;
+}
+
+.loginLabelWidth {
+    width: 110px;
+}
+
+.loginInputWidth {
+    width: 100% !important;
+}

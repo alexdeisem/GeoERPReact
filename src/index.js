@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import store from './app/store';
-import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from "react-router-dom"
+
+import "primeicons/primeicons.css";
+import "primereact/resources/primereact.min.css";
+import "primeflex/primeflex.min.css";
+import "primereact/resources/themes/fluent-light/theme.css";
+import './index.css';
+
+import store from './store/store';
+import App from './components/App';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
