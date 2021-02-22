@@ -1,9 +1,15 @@
-import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT } from './authTypes';
+import axios from 'axios';
+import { AUTH_LOGIN_SUCCESS, AUTH_LOGOUT, AUTH_SET_USER } from './authTypes';
 
 const initialState = {
-  isLoggedIn: false,
-  isAdmin: false,
-  token: ''
+  isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+  isAdmin: localStorage.getItem('isAdmin') || false,
+  token: localStorage.getItem('token') || '',
+  user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
+}
+
+if (initialState.token) {
+  axios.defaults.headers.common = {'Authorization': `Bearer ${initialState.token}`};
 }
 
 export default function(state=initialState, action) {
@@ -14,6 +20,7 @@ export default function(state=initialState, action) {
         isLoggedIn: true,
         isAdmin: action.payload.user.isAdmin,
         token: action.payload.token,
+        user: {...action.payload.user}
       }
         
     case AUTH_LOGOUT:
@@ -22,6 +29,15 @@ export default function(state=initialState, action) {
         isLoggedIn: false,
         isAdmin: false,
         token: '',
+        user: {}
+      }
+
+    case AUTH_SET_USER:
+      return {
+        ...state,
+        isLoggedIn: true,
+        isAdmin: action.payload.isAdmin,
+        user: {...action.payload}
       }
       
     default: return state

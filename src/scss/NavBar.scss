@@ -1,0 +1,15 @@
+.UndecoratedLink {
+  text-decoration: none !important;
+}
+
+.NavbarBrand {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: lighter;
+  letter-spacing: 0.1rem;
+}
+
+.ActiveLink {
+  font-weight: 500;
+}

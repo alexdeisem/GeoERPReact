@@ -4,11 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom"
 
-import "primeicons/primeicons.css";
-import "primereact/resources/primereact.min.css";
-import "primeflex/primeflex.min.css";
-import "primereact/resources/themes/fluent-light/theme.css";
-import './index.css';
+import 'rsuite/lib/styles/index.less';
 
 import store from './store/store';
 import App from './components/App';

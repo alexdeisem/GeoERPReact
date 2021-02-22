@@ -6,15 +6,11 @@ const selectAuth = state => state.auth;
 
 const Index = () => {
   const auth = useSelector(selectAuth);
-  const redirectToLogin = auth.isLoggedIn ? <Redirect to="/dashboard" /> : <Redirect to="/login" />;
+  const redirectToLogin = auth.isLoggedIn ? <Redirect to="/admin/dashboard" /> : <Redirect to="/login" />;
 
   return (
     <div>
-      {redirectToLogin}
-      Index
-      Is Logged In: {auth.isLoggedIn}
-      Is Admin: {auth.isLoggedIn}
-      Token: {auth.token}
+      { redirectToLogin }
     </div>
    )
 }
