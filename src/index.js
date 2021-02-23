@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom"
 
 import 'rsuite/lib/styles/index.less';
+import './scss/custom.scss';
 
 import store from './store/store';
 import App from './components/App';

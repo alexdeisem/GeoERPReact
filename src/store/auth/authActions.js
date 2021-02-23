@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../apiProvider';
 import {
   AUTH_SET_USER,
   AUTH_LOGIN_SUCCESS,
@@ -38,7 +38,7 @@ const setAuthToStorage = (data) => {
 export const login = (params) => {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      axios.post('http://geoerp.api/api/login', params)
+      axios.post('login', params)
         .then(response => {
           dispatch(loginSuccess(response.data));
           setAuthToStorage(response.data);
@@ -64,7 +64,7 @@ export const logout = () => {
 export const getUser = () => {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      axios.get('http://geoerp.api/api/user')
+      axios.get('user')
         .then(response => {
           if (response.data.deleted) {
             dispatch(logout);

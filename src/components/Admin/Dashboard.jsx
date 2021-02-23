@@ -38,7 +38,9 @@ export function Dashboard(props) {
   return (
     <div>
       <SubMenu menu={menu} />
-      <ContractsTable />
+      <div style={{padding: '8px'}}>
+        <ContractsTable />
+      </div>
     </div>
   )
 }

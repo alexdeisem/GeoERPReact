@@ -1,0 +1,1 @@
+export const CONTRACTS_LOADED = 'contracts/loaded';

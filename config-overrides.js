@@ -21,6 +21,8 @@ module.exports = override(
         '@text-color': '#333333',
         '@font-family-base': '"Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif',
         '@input-border-width': '1.2px',
+        '@table-border-color': '@B200',
+        '@table-head-font-color': '@B800',
       }
     }
   })
