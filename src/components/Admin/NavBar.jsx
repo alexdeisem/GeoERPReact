@@ -1,77 +1,66 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Col, Row } from 'antd';
+import { DesktopOutlined, FileTextOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
 
-import { Icon, Nav, Navbar } from 'rsuite';
-
-import {ProfileButton} from '../ProfileButton';
+import { Brand } from '../Brand';
+import { ProfileButton } from '../ProfileButton';
+import { MenuItem } from './MenuItem';
 import '../../scss/NavBar.scss';
 
 export function NavBar(props) {
-  const [active, setActive] = useState('dashboard');
+
+  const [active, setActive] = useState('Dashboard');
 
   const items = [
     {
-      key: 'dashboard',
       label: 'Dashboard',
       url: '/admin/dashboard',
-      icon: 'dashboard'
+      icon: <DesktopOutlined />
     },
     {
-      key: 'customers',
       label: 'Заказчики',
       url: '/admin/customers',
-      icon: 'peoples-map'
+      icon: <TeamOutlined />
     },
     {
-      key: 'employees',
       label: 'Сотрудники',
       url: '/admin/employees',
-      icon: 'peoples'
+      icon: <TeamOutlined />
     },
     {
-      key: 'documents',
       label: 'Документы',
       url: '/admin/employees',
-      icon: 'file-o'
+      icon: <FileTextOutlined />
     },
     {
-      key: 'map',
       label: 'Карта',
       url: '/admin/employees',
-      icon: 'map-o'
+      icon: <TagOutlined />
     },
   ]
 
   const menuItems = items.map((item, index) => 
-    <Nav.Item
+    <MenuItem 
       key={index}
-      eventKey={item.key}
-      componentClass={Link}
-      to={item.url}
-      icon={<Icon icon={item.icon}/>}
-      className={active === item.key ? 'ActiveLink' : ''}
-    >
-      {item.label}
-    </Nav.Item>
+      label={item.label}
+      url={item.url}
+      icon={item.icon}
+      className={item.label === active ? 'active' : ''}
+      onClick={() => setActive(item.label)}
+    />
   );
 
   return (
-    <div>
-      <Navbar appearance="inverse">
-        <Navbar.Header>
-          <Link to="/admin/dashboard" className="NavbarBrand UndecoratedLink">
-            GeoERP
-          </Link>
-        </Navbar.Header>
-        <Navbar.Body>
-            <Nav activeKey={active} onSelect={item => setActive(item)}>
-              {menuItems}
-            </Nav>
-            <Nav pullRight>
-              <ProfileButton />
-            </Nav>
-          </Navbar.Body>
-      </Navbar>
-    </div>
+    <Row wrap={false} className="Navbar">
+      <Col flex="none">
+        <Brand />
+      </Col>
+      <Col flex="auto">
+        {menuItems}
+      </Col>
+      <Col flex="none">
+        <ProfileButton />
+      </Col>
+    </Row>
   )
 }

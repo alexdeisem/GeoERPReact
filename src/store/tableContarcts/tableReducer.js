@@ -5,7 +5,7 @@ const initialState = {
   pageSize: 10,
 }
 
-export default function(state=initialState, action) {
+function contractsTableReducer(state=initialState, action) {
   switch(action.type) {
     case PAGE_CHANGED:
       return {
@@ -22,3 +22,5 @@ export default function(state=initialState, action) {
     default: return state
   }
 }
+
+export { contractsTableReducer };

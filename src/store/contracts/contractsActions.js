@@ -14,7 +14,7 @@ export const getContracts = () => {
       axios.get('contracts')
         .then(response => {
           dispatch(loadSuccess(response.data.contracts));
-          resolve(response);
+          resolve(response.data);
         })
         .catch(() => {
           console.log('contracts loading fails')

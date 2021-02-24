@@ -1,40 +1,43 @@
 import { SubMenu } from './SubMenu';
 import { ContractsTable } from '../Tables/ContractsTable';
+import { 
+  CreditCardOutlined, 
+  FileAddOutlined, 
+  FileWordOutlined, 
+  LineChartOutlined, 
+  OrderedListOutlined 
+} from '@ant-design/icons';
 
 const menu = [
   {
-    key: 'contracts',
     label: 'Договоры',
-    url: '/admin/dashboard/contracts',
-    icon: 'file-text',
+    url: '/admin/dashboard',
+    icon: <FileWordOutlined />,
   },
   {
-    key: 'new-contract',
     label: 'Новый договор',
     url: '/admin/dashboard/new-contract',
-    icon: 'plus-circle',
+    icon: <FileAddOutlined />,
   },
   {
-    key: 'tasks',
     label: 'Задачи',
     url: '/admin/dashboard/tasks',
-    icon: 'task',
+    icon: <OrderedListOutlined />,
   },
   {
-    key: 'statistics',
     label: 'Статистика',
     url: '/admin/dashboard/statistics',
-    icon: 'line-chart',
+    icon: <LineChartOutlined />,
   },
   {
-    key: 'operations',
     label: 'Операции',
     url: '/admin/dashboard/operations',
-    icon: 'credit-card',
+    icon: <CreditCardOutlined />,
   },
-]
+];
 
 export function Dashboard(props) {
+
   return (
     <div>
       <SubMenu menu={menu} />

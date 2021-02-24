@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {Dropdown, Icon} from 'rsuite';
+import { Button, Dropdown, Menu } from 'antd';
+import { HomeOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 import {logout} from '../store/auth/authActions';
 
@@ -11,15 +12,26 @@ export function ProfileButton(props) {
     dispatch(logout());
   };
 
+  const menu = (
+    <Menu style={{width: "95%"}}>
+      <Menu.Item key="1" icon={<HomeOutlined />}>
+        Моя страница
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        icon={<LogoutOutlined />}
+        onClick={ () => handleLogout() }
+      >
+        Выход
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <Dropdown
-      title={`${user.first_name} ${user.last_name}`}
-      icon={<Icon icon="avatar"/>}
-      menuStyle={{width: "95%"}}
-    >
-      <Dropdown.Item icon={<Icon icon="home" />}>Моя страница</Dropdown.Item>
-      <Dropdown.Item divider />
-      <Dropdown.Item icon={<Icon icon="sign-out" />} onSelect={handleLogout}>Выйти</Dropdown.Item>
+    <Dropdown className="ProfileBtn" overlay={menu} trigger="click">
+      <Button type="text" icon={<UserOutlined />}>
+        {`${user.first_name} ${user.last_name}`}
+      </Button>
    </Dropdown>
   );
 }

@@ -1,3 +1,59 @@
-.rs-table-cell-wrap {
-  word-break: break-word;
+@import "./variables";
+
+* {
+  font-family: 	'Segoe UI Regular Cyrillic', 'Segoe UI', 'Segoe WP', Tahoma, Arial, sans-serif !important;
+}
+
+.Navbar {
+  background: $logoColor;
+}
+
+.NavbarItem {
+  height: $navbarHeight;
+  color: $whiteText !important;
+
+  a {
+    color: $whiteText;
+    padding-left: 8px;
+  }
+}
+
+.NavbarItem.active,
+.NavbarItem.active:hover {
+  background-color: darken($logoColor, 8%);
+}
+
+.NavbarItem:hover {
+  background-color: darken($logoColor, 4%);
+}
+
+.Brand {
+  display: inline-block;
+  height: $navbarHeight;
+  font-size: 28px;
+  background: $logoColor;
+  font-weight: 300;
+  padding: 0 48px 0 36px;
+  letter-spacing: 0.1rem;
+
+  a {
+    color: $whiteText !important;
+  }
+}
+
+.ProfileBtn {
+  height: $navbarHeight;
+  color: $whiteText;
+}
+
+.ProfileBtn:hover,
+.ProfileBtn:focus {
+  color: $whiteText;
+  background-color: darken($logoColor, 4%);
+}
+
+.Content {
+  min-height: calc(100vh - 96px);
+  padding: 16px 24px;
+  background: #fff;
 }

@@ -3,19 +3,32 @@
 .LoginContainer {
     position: relative;
     height: 100vh;
-    background-color: #F2F2F2;
+    background: repeating-linear-gradient(
+        45deg,
+        #fff,
+        #fff 20px,
+        #F2F2F2 20px,
+        #F2F2F2 40px
+    );
+}
+
+.Logo {
+    margin-bottom: 24px;
 }
 
 .Login {
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
     width: 480px;
+    padding: 12px 24px;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0 0 10px #E5E5E5;
 }
 
 .LoginBtn {
+    margin-top: 8px;
     width: 120px;
-    margin-bottom: 5px;
 }

@@ -1,32 +1,29 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Container, Grid, Icon, Nav, Row } from "rsuite";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu } from 'antd';
 
 export function SubMenu(props) {
-  const [active, setActive] = useState('contracts');
+  const [active, setActive] = useState(props.menu[0].label);
 
-  const nav = props.menu.map((item, index) => 
-    <Nav.Item
-      componentClass={Link}
-      to={item.url}
-      icon={<Icon icon={item.icon}/>}
+  const menuItems = props.menu.map((item, index) => 
+    <Menu.Item
       eventKey={item.key}
-      key={index}
+      key={item.label}
+      icon={item.icon}
     >
-      {item.label }
-    </Nav.Item>  
+      <Link to={item.url}>
+        {item.label }
+      </Link>
+    </Menu.Item>  
   )
 
   return (
-    <div>
-      <Grid fluid>
-        <Row>
-          <Nav appearance="subtle" activeKey={active} onSelect={key => setActive(key)}>
-            {nav}
-          </Nav>
-        </Row>
-      </Grid>
-    </div>
+    <Menu
+      mode="horizontal"
+      selectedKeys={[active]}
+      onClick={e => setActive(e.key)}
+    >
+      {menuItems}
+    </Menu>
   );
 }

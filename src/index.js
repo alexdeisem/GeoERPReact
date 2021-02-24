@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from "react-router-dom"
 
-import 'rsuite/lib/styles/index.less';
+import 'antd/dist/antd.css';
 import './scss/custom.scss';
 
 import store from './store/store';

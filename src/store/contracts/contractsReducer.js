@@ -1,10 +1,14 @@
 import { CONTRACTS_LOADED } from './contractsTypes';
 
 const initialState = {
-  contracts: [],
+  contracts: [{
+    number: '1',
+    contract_date: '2007-01-01',
+    end_date: '2007-02-01',
+  }],
 }
 
-export default function(state=initialState, action) {
+function contractsReducer(state=initialState, action) {
   switch(action.type) {
     case CONTRACTS_LOADED:
       return {
@@ -15,3 +19,5 @@ export default function(state=initialState, action) {
     default: return state
   }
 }
+
+export { contractsReducer }

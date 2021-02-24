@@ -1,48 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { 
-  Button,
-  ButtonToolbar,
-  ControlLabel,
-  Form, 
-  FormControl,
-  FormGroup,
-  Panel,
-  Schema
-} from 'rsuite';
+import { Button, Form, Input } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 
 import { Logo } from'./Logo';
 import { login } from '../store/auth/authActions';
 import '../scss/Login.scss';
 
 export function LoginForm(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const { StringType } = Schema.Types;
-
-  const model = Schema.Model({
-    username: StringType()
-      .isRequired('Поле не может быть пустым')
-      .minLength(2, 'Логин не может быть короче 2 символов')
-      .maxLength(50, 'Логин не может быть длинее 50 символов'),
-    password: StringType()
-      .isRequired('Поле не может быть пустым')
-      .minLength(8, 'Пароль не может быть короче 8 символов')
-      .maxLength(50, 'Пароль не может быть длинее 50 символов'),
-  });
-
-  const handleSubmit = valid => {
-    if (!valid) {
+  const handleSubmit = values => {
+    if (!values) {
       return;
     }
-
     dispatch(
-      login({
-        username: username,
-        password: password
-      })
+      login(values)
     ).then((isAdmin) => {
       if (isAdmin) {
         props.history.push('/admin/dashboard');
@@ -52,38 +25,45 @@ export function LoginForm(props) {
     });
   }
 
+  const required =  {
+    required: true,
+    message: 'Поле не может быть  пустым'
+  };
+
   return (
     <div className="LoginContainer">
-      <div className="Login">
-        <Panel header={ <Logo fontSize="48px" weight="400"/>} bordered>
-          <Form model={model} fluid onSubmit={valid => handleSubmit(valid)}>
-            <FormGroup>
-              <ControlLabel>Логин</ControlLabel>
-              <FormControl
-                name="username"
-                autoComplete="off"
-                value={ username }
-                onChange={ value => setUsername(value) }
-              />
-            </FormGroup>
-            <FormGroup>
-              <ControlLabel>Пароль</ControlLabel>
-              <FormControl
-              type="password"
-              name="password"
-              autoComplete="password"
-              value={ password }
-              onChange={ value => setPassword(value) }
-              />
-            </FormGroup>
-            <FormGroup>
-              <ButtonToolbar>
-                <Button appearance="primary" type="submit" className="LoginBtn">Войти</Button>
-              </ButtonToolbar>
-            </FormGroup>
-          </Form>
-        </Panel>
-      </div>
+      <Form
+        name="login"
+        className="Login"
+        onFinish={ values => handleSubmit(values) }
+      >
+       <Logo fontSize="64px" weight="200" className="Logo" />
+        <Form.Item
+          name="username"
+          rules={[required]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Логин"
+            autoComplete="off"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[required]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Пароль"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="LoginBtn">
+            Войти
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

@@ -1,14 +1,11 @@
 import React from 'react';
 import '../scss/Logo.scss';
 
-export class Logo extends React.Component {
-  render() {
-
+export function Logo(props) {
     return (
-        <span className="p-text-light">
-          <span className="mainColor" style={{fontSize: this.props.fontSize, fontWeight: this.props.weight}}>Geo</span>
-          <span className="secondColor" style={{fontSize: this.props.fontSize, fontWeight: this.props.weight}}>ERP</span>
-        </span>
+      <span className={`${props.className} logoBrand`}>
+        <span className="mainColor" style={{fontSize: props.fontSize, fontWeight: props.weight}}>Geo</span>
+        <span className="secondColor" style={{fontSize: props.fontSize, fontWeight: props.weight}}>ERP</span>
+      </span>
     )
-  }
 }

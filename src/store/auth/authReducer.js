@@ -12,7 +12,7 @@ if (initialState.token) {
   axios.defaults.headers.common = {'Authorization': `Bearer ${initialState.token}`};
 }
 
-export default function(state=initialState, action) {
+function authReducer(state=initialState, action) {
   switch(action.type) {
     case AUTH_LOGIN_SUCCESS:
       return {
@@ -43,3 +43,5 @@ export default function(state=initialState, action) {
     default: return state
   }
 }
+
+export { authReducer };
