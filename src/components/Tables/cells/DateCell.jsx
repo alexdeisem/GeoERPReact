@@ -1,18 +1,13 @@
-import { Table } from 'rsuite';
-import { reachNestedValue } from '../../../helpers';
-
-const { Cell } = Table;
-
-function DateCell({rowData, dataKey, ...props}) {
+function DateCell(props) {
   const toLocaleDate = (stringDate) => {
     return new Date(stringDate).toLocaleDateString();
   }
 
+  const displayValue = props.value ? toLocaleDate(props.value) : '';
+
   return (
-    <Cell {...props}>
-      {toLocaleDate(reachNestedValue(rowData, dataKey))}
-    </Cell>
-  )
+    <span>{displayValue}</span>
+  );
 };
 
 export { DateCell };

@@ -1,9 +1,4 @@
-import { Table } from 'rsuite';
-import { reachNestedValue } from '../../../helpers'; 
-
-const { Cell } = Table;
-
-function NumberCell({rowData, dataKey, ...props}) {
+function NumberCell(props) {
   const formatNum = (number) => {
     if (!number) {
       return '0.00';
@@ -13,11 +8,9 @@ function NumberCell({rowData, dataKey, ...props}) {
   }
 
   return (
-    <Cell {...props}>
-      <span style={{fontStyle: "italic"}}>
-        {formatNum(reachNestedValue(rowData, dataKey))}
-        </span>
-    </Cell>
+    <span style={{fontStyle: "italic"}}>
+      {formatNum(props.value)}
+    </span>
   )
 }
 
