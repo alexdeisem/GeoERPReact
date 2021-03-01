@@ -1,45 +1,45 @@
 import axios from '../apiProvider';
 import {
-  CONTRACTS_LOADED,
-  CONTRACTS_TABLE_PAGE_CHANGE,
-  CONTRACTS_TABLE_PAGE_SIZE_CHANGE,
-  CONTRACTS_TABLE_SORTING_CHANGE,
-  CONTRACTS_TABLE_SET_DEFAULT_SORTING,
+  LOADED,
+  TABLE_PAGINATION_CHANGE,
+  TABLE_SORTING_CHANGE,
+  TABLE_SET_DEFAULT_SORTING,
+  TABLE_FILTERS_CHANGE,
 } from './contractsTypes';
 
 const loadSuccess = (contracts) => {
   return {
-    type: CONTRACTS_LOADED,
+    type: LOADED,
     payload: contracts
   };
 };
 
-export const setContractsTblPage = (pageNumber) => {
+export const setContractsTblPagination = (pagination) => {
   return {
-    type: CONTRACTS_TABLE_PAGE_CHANGE,
-    payload: pageNumber
-  };
-};
-
-export const setContractsTblPageSize = (pageSize) => {
-  return {
-    type: CONTRACTS_TABLE_PAGE_SIZE_CHANGE,
-    payload: pageSize
-  };
-};
+    type: TABLE_PAGINATION_CHANGE,
+    payload: pagination
+  }
+}
 
 export const setContractsTblSorting = (sortParams) => {
   return {
-    type: CONTRACTS_TABLE_SORTING_CHANGE,
+    type: TABLE_SORTING_CHANGE,
     payload: sortParams
   };
 };
 
 export const setContractsTblDefaultSorting = () => {
   return {
-    type: CONTRACTS_TABLE_SET_DEFAULT_SORTING
+    type: TABLE_SET_DEFAULT_SORTING
   };
 };
+
+export const setContractsTblFilters = (filters) => {
+  return {
+    type: TABLE_FILTERS_CHANGE,
+    payload: filters
+  }
+}
 
 export const getContracts = (params={}) => {
   return (dispatch) => {

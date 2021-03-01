@@ -4,21 +4,26 @@ import { Table } from 'antd';
 
 import { 
   getContracts,
-  setContractsTblPage,
-  setContractsTblPageSize,
+  setContractsTblPagination,
   setContractsTblSorting,
   setContractsTblDefaultSorting,
+  setContractsTblFilters,
 } from '../../store/contracts/contractsActions';
+import { ContractsFilters } from './ContractsFilters';
 import { DateCell, NumberCell } from './cells';
 
 export function ContractsTable() {
   const dispatch = useDispatch();
   const contracts = useSelector(state => state.contracts.contracts);
-  const page = useSelector(state => state.contracts.tblPage);
-  const pageSize = useSelector(state => state.contracts.tblPageSize);
+  const pagination = useSelector(state => state.contracts.tblPagintaion);
   const sorting = useSelector(state => state.contracts.tblSorting);
+  const filters = useSelector(state => state.contracts.tblFilters);
   const [isLoading, setLoading] = useState(true);
   const [total, setTotal] = useState(1);
+
+  const getSortOrder = (fieldName) => {
+    return sorting.sort_by === fieldName && sorting.order_by + 'end';
+  };
 
   const columns = [
     {
@@ -26,12 +31,14 @@ export function ContractsTable() {
       dataIndex: 'number',
       width: 80,
       sorter: {},
+      defaultSortOrder: getSortOrder('number'),
     },
     {
       title: 'Дата',
       dataIndex: 'contract_date',
       width: 100,
       sorter: {},
+      defaultSortOrder: getSortOrder('contract_date'),
       render: (contractDate) => <DateCell value={contractDate} />
     },
     { 
@@ -39,6 +46,7 @@ export function ContractsTable() {
       dataIndex: 'end_date',
       width: 100,
       sorter: {},
+      defaultSortOrder: getSortOrder('end_date'),
       render: (endDate) => <DateCell value={endDate} />
     },
     {
@@ -63,6 +71,7 @@ export function ContractsTable() {
       width: 90,
       align: 'right',
       sorter: {},
+      defaultSortOrder: getSortOrder('sum'),
       render: (sum) => <NumberCell value={sum} />
     },
     {
@@ -71,19 +80,29 @@ export function ContractsTable() {
       width: 90,
       align: 'right',
       sorter: {},
+      defaultSortOrder: getSortOrder('budget'),
       render: (budget) => <NumberCell value={budget} />
     },
     {
       title: 'Статус',
       dataIndex: 'status',
       sorter: {},
+      defaultSortOrder: getSortOrder('status'),
       width: 100,
     },
   ];
 
-  const pagination = {
-    current: page,
-    pageSize: pageSize,
+  const getPage = (pagination) => (pagination.skip / pagination.take) + 1;
+  const calcPagination = (currentPage, pageSize) => {
+    return {
+      skip: (currentPage - 1) * pageSize,
+      take: pageSize
+    };
+  };
+
+  const tblPagination = {
+    current: getPage(pagination),
+    pageSize: pagination.take,
     pageSizeOptions: [10, 50, 100, 200, 500],
     position: ['topRight', 'bottomRight'],
     size: 'small',
@@ -98,31 +117,9 @@ export function ContractsTable() {
       columns={columns}
       dataSource={contracts}
       loading={true}
-      pagination={pagination}
+      pagination={tblPagination}
     />
   );
-
-  const queryParams = (pagination={}, sorter={}) => {
-    let params = {};
-
-    if (pagination.pageSize && pagination.current) {
-      params.take = pagination.pageSize;
-      params.skip = (pagination.current - 1) * pagination.pageSize;
-    } else {
-      params.take = pageSize;
-      params.skip = (page - 1) * pageSize
-    }
-
-    if (sorter.field && sorter.order) {
-      params.sort_by = sorter.field;
-      params.order_by = sorter.order === 'ascend' ? 'asc' : 'desc';
-    } else {
-      params.sort_by = sorting.sortBy;
-      params.order_by = sorting.orderBy;
-    }
-
-    return params;
-  };
 
   const contractsTable = (
     <Table
@@ -132,51 +129,42 @@ export function ContractsTable() {
       size="small"
       columns={columns}
       dataSource={contracts}
-      pagination={pagination}
-      onChange={(pagination,filters, sorter) => {
-        let sorting = {};
-        if (sorter.field && sorter.order) {
-          sorting = {
-            sort_by: sorter.field,
-            order_by: sorter.order === 'ascend' ? 'asc' : 'desc'
-          }
-        } else {
-          sorting = {}
-        }
-
-        const params = {
-          ...sorting,
-          take: pagination.pageSize,
-          skip: (pagination.current - 1) * pagination.pageSize,
-        }
-        dispatch(getContracts(params))
-          .then((data) => {
-            setTotal(data.count);
-            dispatch(setContractsTblPage(pagination.current));
-            dispatch(setContractsTblPageSize(pagination.pageSize));
+      pagination={tblPagination}
+      onChange={(tblPaging, _, sorter) => {
+            dispatch(setContractsTblPagination(
+              calcPagination(tblPaging.current, tblPaging.pageSize)
+            ));
             if (sorter.field && sorter.order) {
               dispatch(setContractsTblSorting({
-                sortBy: sorter.field,
-                orderBy: sorter.order === 'ascend' ? 'asc' : 'desc'
+                sort_by: sorter.field,
+                order_by: sorter.order === 'ascend' ? 'asc' : 'desc'
               }));
             } else {
               dispatch(setContractsTblDefaultSorting());
             }
-          });
-      }}
+          }}
     />
   );
 
   useEffect(() => {
-    dispatch(getContracts(queryParams()))
+    const queryParams = {
+      ...filters,
+      ...pagination,
+      ...sorting
+    }
+    dispatch(getContracts(queryParams))
       .then((response) => {
         setLoading(false);
         setTotal(response.count);
-    })}, [dispatch]
+    })}, [dispatch, filters, pagination, sorting]
   );
 
   return (
     <div>
+      <ContractsFilters
+        values={filters}
+        onChange={(_, allValues) => dispatch(setContractsTblFilters(allValues))}
+      />
       { isLoading ? tableLoading : contractsTable }
     </div>
   );

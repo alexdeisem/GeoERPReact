@@ -1,9 +1,9 @@
 import { 
-  CONTRACTS_LOADED,
-  CONTRACTS_TABLE_PAGE_CHANGE,
-  CONTRACTS_TABLE_PAGE_SIZE_CHANGE,
-  CONTRACTS_TABLE_SET_DEFAULT_SORTING,
-  CONTRACTS_TABLE_SORTING_CHANGE,
+  LOADED,
+  TABLE_PAGINATION_CHANGE,
+  TABLE_SET_DEFAULT_SORTING,
+  TABLE_SORTING_CHANGE,
+  TABLE_FILTERS_CHANGE
 } from './contractsTypes';
 
 const initialState = {
@@ -13,50 +13,52 @@ const initialState = {
     contract_date: '2007-01-01',
     end_date: '2007-02-01',
   }],
-  tblPage: 1,
-  tblPageSize: 10,
+  tblPagintaion: {
+    take: 10,
+    skip: 0
+  },
   tblSorting: {
-    sortBy: 'contract_date',
-    orderBy: 'desc',
-  }
+    sort_by: 'contract_date',
+    order_by: 'desc',
+  },
+  tblFilters: {
+    search: '',
+  },
 };
 
 function contractsReducer(state=initialState, action) {
   switch(action.type) {
-    case CONTRACTS_LOADED:
+    case LOADED:
       return {
         ...state,
         contracts: action.payload
       }
 
-    case CONTRACTS_TABLE_PAGE_CHANGE:
+    case TABLE_PAGINATION_CHANGE:
       return {
         ...state,
-        tblPage: action.payload
+        tblPagintaion: action.payload
       }
 
-    case CONTRACTS_TABLE_PAGE_SIZE_CHANGE:
+    case TABLE_SORTING_CHANGE:
       return {
         ...state,
-        tblPageSize: action.payload
-      }
-
-    case CONTRACTS_TABLE_SORTING_CHANGE:
-      return {
-        ...state,
-        tblSorting: {
-          sortBy: action.payload.sortBy,
-          orderBy: action.payload.orderBy
-        }
+        tblSorting: action.payload
       }
     
-    case CONTRACTS_TABLE_SET_DEFAULT_SORTING:
+    case TABLE_SET_DEFAULT_SORTING:
       return {
         ...state,
         tblSorting: {
-          sortBy: 'contracts_date',
-          orderBy: 'desc'
+          sort_by: 'contract_date',
+          order_by: 'desc'
         }
+      }
+
+    case TABLE_FILTERS_CHANGE:
+      return {
+        ...state,
+        tblFilters: action.payload
       }
       
     default: return state

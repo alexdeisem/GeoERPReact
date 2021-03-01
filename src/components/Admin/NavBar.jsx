@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import { DesktopOutlined, FileTextOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
 
@@ -40,14 +41,14 @@ export function NavBar(props) {
   ]
 
   const menuItems = items.map((item, index) => 
-    <MenuItem 
-      key={index}
-      label={item.label}
-      url={item.url}
-      icon={item.icon}
-      className={item.label === active ? 'active' : ''}
-      onClick={() => setActive(item.label)}
-    />
+    <Link to={item.url} key={index}>
+      <MenuItem 
+        label={item.label}
+        icon={item.icon}
+        className={item.label === active ? 'active' : ''}
+        onClick={() => setActive(item.label)}
+      />
+    </Link>
   );
 
   return (

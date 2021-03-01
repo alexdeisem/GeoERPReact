@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 
 export function MenuItem(props) {
@@ -9,9 +8,7 @@ export function MenuItem(props) {
       icon={props.icon}
       onClick={props.onClick}
     >
-      <Link to={props.url}>
         {props.label}
-      </Link>
     </Button>
   );
 };
