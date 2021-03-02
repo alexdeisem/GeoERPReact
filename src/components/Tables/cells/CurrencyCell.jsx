@@ -1,10 +1,12 @@
-function NumberCell(props) {
+import { formatNumberAsCurrency } from '../../../helpers';
+
+function CurrencyCell(props) {
   const formatNum = (number) => {
     if (!number) {
       return '0.00';
     }
 
-    return (Math.round((+number + Number.EPSILON) * 100) / 100).toFixed(2);
+    return formatNumberAsCurrency(number).replace('BYN', '');
   }
 
   return (
@@ -14,4 +16,4 @@ function NumberCell(props) {
   )
 }
 
-export { NumberCell }
+export { CurrencyCell }

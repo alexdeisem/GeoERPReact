@@ -12,9 +12,10 @@ const initialState = {
     number: '1',
     contract_date: '2007-01-01',
     end_date: '2007-02-01',
+    status: 'новый'
   }],
   tblPagintaion: {
-    take: 10,
+    take: 15,
     skip: 0
   },
   tblSorting: {
@@ -23,6 +24,14 @@ const initialState = {
   },
   tblFilters: {
     search: '',
+    work_types: [],
+    date_start: '2007-01-01',
+    date_end: new Date().toISOString().slice(0, 10),
+    new: true,
+    in_work: true,
+    complete: true,
+    cancel: false,
+    year: false,
   },
 };
 
@@ -58,7 +67,10 @@ function contractsReducer(state=initialState, action) {
     case TABLE_FILTERS_CHANGE:
       return {
         ...state,
-        tblFilters: action.payload
+        tblFilters: {
+          ...state.tblFilters,
+          ...action.payload
+        },
       }
       
     default: return state

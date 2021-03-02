@@ -1,2 +1,3 @@
 export { DateCell } from './DateCell';
-export { NumberCell } from './NumberCell';
+export { CurrencyCell } from './CurrencyCell';
+export { StatusCell } from './StatusCell';

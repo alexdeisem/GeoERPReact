@@ -10,7 +10,7 @@ import {
   setContractsTblFilters,
 } from '../../store/contracts/contractsActions';
 import { ContractsFilters } from './ContractsFilters';
-import { DateCell, NumberCell } from './cells';
+import { DateCell, CurrencyCell, StatusCell } from './cells';
 
 export function ContractsTable() {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ export function ContractsTable() {
   const filters = useSelector(state => state.contracts.tblFilters);
   const [isLoading, setLoading] = useState(true);
   const [total, setTotal] = useState(1);
+  const [totalSum, setTotalSum] = useState(0);
 
   const getSortOrder = (fieldName) => {
     return sorting.sort_by === fieldName && sorting.order_by + 'end';
@@ -59,7 +60,7 @@ export function ContractsTable() {
       dataIndex: ['customer', 'account', 'balance'],
       width: 90,
       align: 'right',
-      render: (balance) => <NumberCell value={balance} />
+      render: (balance) => <CurrencyCell value={balance} />
     },
     {
       title: 'Объект',
@@ -72,7 +73,7 @@ export function ContractsTable() {
       align: 'right',
       sorter: {},
       defaultSortOrder: getSortOrder('sum'),
-      render: (sum) => <NumberCell value={sum} />
+      render: (sum) => <CurrencyCell value={sum} />
     },
     {
       title: 'Бюджет',
@@ -81,14 +82,15 @@ export function ContractsTable() {
       align: 'right',
       sorter: {},
       defaultSortOrder: getSortOrder('budget'),
-      render: (budget) => <NumberCell value={budget} />
+      render: (budget) => <CurrencyCell value={budget} />
     },
     {
       title: 'Статус',
       dataIndex: 'status',
       sorter: {},
       defaultSortOrder: getSortOrder('status'),
-      width: 100,
+      width: 130,
+      render: (status) => <StatusCell value={status} />
     },
   ];
 
@@ -103,8 +105,8 @@ export function ContractsTable() {
   const tblPagination = {
     current: getPage(pagination),
     pageSize: pagination.take,
-    pageSizeOptions: [10, 50, 100, 200, 500],
-    position: ['topRight', 'bottomRight'],
+    pageSizeOptions: [15, 50, 100, 200, 500],
+    position: ['bottomRight'],
     size: 'small',
     showTotal: (total, range) => `${range[0]} - ${range[1]} / ${total}`,
     showQuickJumper: true,
@@ -124,9 +126,9 @@ export function ContractsTable() {
   const contractsTable = (
     <Table
       bordered
-      showSorterTooltip={false}
       rowKey="id"
       size="small"
+      showSorterTooltip={false}
       columns={columns}
       dataSource={contracts}
       pagination={tblPagination}
@@ -147,8 +149,24 @@ export function ContractsTable() {
   );
 
   useEffect(() => {
-    const queryParams = {
+    const formFilters = {
       ...filters,
+      statuses: [
+        filters.new && 'новый',
+        filters.in_work && 'в работе',
+        filters.complete && 'выполнен',
+        filters.cancel && 'отменен',
+      ].filter(i => i)
+    }
+
+    Object.entries(formFilters).forEach(([key, value]) => {
+      if (!value || ['new', 'in_work', 'complete', 'cancel'].includes(key)) {
+        delete formFilters[key];
+      }
+    });
+
+    const queryParams = {
+      ...formFilters,
       ...pagination,
       ...sorting
     }
@@ -156,6 +174,7 @@ export function ContractsTable() {
       .then((response) => {
         setLoading(false);
         setTotal(response.count);
+        setTotalSum(response.total_sum);
     })}, [dispatch, filters, pagination, sorting]
   );
 
@@ -163,7 +182,8 @@ export function ContractsTable() {
     <div>
       <ContractsFilters
         values={filters}
-        onChange={(_, allValues) => dispatch(setContractsTblFilters(allValues))}
+        onChange={(changedValue) => dispatch(setContractsTblFilters(changedValue))}
+        totalSum={totalSum}
       />
       { isLoading ? tableLoading : contractsTable }
     </div>

@@ -10,7 +10,6 @@ export function WorkTypesSelect(props) {
   const workTypes = useSelector(state => state.workTypes.workTypes);
   const [options, setOptions] = useState([]);
   const dispatch = useDispatch();
-  const width = props.width || 250;
 
   const abbrValue = (value) => {
     return value
@@ -30,7 +29,7 @@ export function WorkTypesSelect(props) {
   useEffect(() => {
     setOptions(workTypes.map(item => 
       <Option key={item.id} value={item.id} label={abbrValue(item.name)}>
-        <small>{item.name}</small>
+        {item.name}
       </Option>  
     ));
   }, [workTypes]);
@@ -40,12 +39,13 @@ export function WorkTypesSelect(props) {
       mode="multiple"
       maxTagCount="responsive"
       placeholder="Все..."
-      style={{width: width}}
       loading={loading}
       onFocus={handleFocus}
       optionLabelProp="label"
       allowClear={true}
       onChange={props.onChange}
+      dropdownMatchSelectWidth={false}
+      defaultValue={props.initialValues}
     >
       {options}
     </Select>
