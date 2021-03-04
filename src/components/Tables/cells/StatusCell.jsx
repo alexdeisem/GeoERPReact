@@ -1,4 +1,5 @@
-import { Button, Dropdown, Menu, Tag } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Button, Dropdown, Menu, Tag, Row, Col } from 'antd';
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
@@ -6,8 +7,14 @@ import {
   HistoryOutlined,
   PlusCircleOutlined
 } from '@ant-design/icons';
+import { updateContract } from 'store/contracts/contractsActions';
 
 function StatusCell(props) {
+  const dispatch = useDispatch();
+  const handleStatusChange = status => {
+    dispatch(updateContract({id: props.contractId, status: status}))
+  }
+
   const formats = {
     'новый': {
       icon: <PlusCircleOutlined/>,
@@ -24,13 +31,15 @@ function StatusCell(props) {
     'отменен': {
       icon: <CloseCircleOutlined/>,
       color: 'error'
-    },
+    }
   }
 
   const menu = (
-    <Menu>
-      {Object.keys(formats).map((status, index) => 
-        <Menu.Item key={index} icon={formats[status].icon}>{status}</Menu.Item>
+    <Menu
+      onClick={ item => handleStatusChange(item.key) }
+    >
+      {Object.keys(formats).map((status) => 
+        <Menu.Item key={status} icon={formats[status].icon}>{status}</Menu.Item>
       )}
     </Menu>
   );
@@ -40,30 +49,29 @@ function StatusCell(props) {
       <Button
         style={{
           border: 'none',
-          padding: 0,
+          padding: '2px',
         }}
       >
-        <MoreOutlined
-          style={{
-            // fontSize: 14,
-            verticalAlign: 'center',
-          }}
-        />
+        <MoreOutlined />
       </Button>
     </Dropdown>
   );
 
   return (
-    <div>
-      <Tag
-        color={formats[props.value].color}
-        icon={formats[props.value].icon}
-      >
-        {props.value}
-      </Tag>
-      <DropdownMenu />
-    </div>
-  )
+    <Row wrap={false} align="middle">
+      <Col flex="auto">
+        <Tag
+          color={formats[props.value].color}
+          icon={formats[props.value].icon}
+        >
+          {props.value}
+        </Tag>
+      </Col>
+      <Col flex="none">
+        <DropdownMenu />
+      </Col>
+    </Row>
+  );
 }
 
 export { StatusCell };

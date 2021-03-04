@@ -10,6 +10,7 @@ import './scss/custom.scss';
 import store from './store/store';
 import App from './components/App';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

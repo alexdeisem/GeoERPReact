@@ -1,9 +1,19 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
-
+import {
+  subscribeChannelEvent,
+  update,
+} from 'store/contracts/contractsActions';
 import { Dashboard } from './Dashboard';
 import { NavBar } from './NavBar';
 
 export function Admin() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(subscribeChannelEvent('ContractUpdated', (e) => dispatch(update(e.contract))));
+  }, [dispatch]);
 
   return (
     <div>

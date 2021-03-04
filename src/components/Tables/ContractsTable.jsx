@@ -8,7 +8,7 @@ import {
   setContractsTblSorting,
   setContractsTblDefaultSorting,
   setContractsTblFilters,
-} from '../../store/contracts/contractsActions';
+} from 'store/contracts/contractsActions';
 import { ContractsFilters } from './ContractsFilters';
 import { DateCell, CurrencyCell, StatusCell } from './cells';
 
@@ -90,7 +90,7 @@ export function ContractsTable() {
       sorter: {},
       defaultSortOrder: getSortOrder('status'),
       width: 130,
-      render: (status) => <StatusCell value={status} />
+      render: (status, contract) => <StatusCell value={status} contractId={contract.id} />
     },
   ];
 

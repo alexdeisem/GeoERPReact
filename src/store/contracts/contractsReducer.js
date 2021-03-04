@@ -1,9 +1,12 @@
 import { 
   LOADED,
+  UPDATE,
   TABLE_PAGINATION_CHANGE,
   TABLE_SET_DEFAULT_SORTING,
   TABLE_SORTING_CHANGE,
-  TABLE_FILTERS_CHANGE
+  TABLE_FILTERS_CHANGE,
+  SUBSCRIBE_CHANNEL_EVENT,
+  UNSUBSCRIBE_CHANNEL_EVENT,
 } from './contractsTypes';
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
     end_date: '2007-02-01',
     status: 'новый'
   }],
+  channels: [],
   tblPagintaion: {
     take: 15,
     skip: 0
@@ -41,6 +45,20 @@ function contractsReducer(state=initialState, action) {
       return {
         ...state,
         contracts: action.payload
+      }
+
+    case UPDATE:
+      return {
+        ...state,
+        contracts: state.contracts.map(
+          contract => {
+            if (contract.id !== action.payload.id) {
+              return contract;
+            }
+
+            return {...contract, ...action.payload}
+          }
+        )
       }
 
     case TABLE_PAGINATION_CHANGE:
@@ -71,6 +89,18 @@ function contractsReducer(state=initialState, action) {
           ...state.tblFilters,
           ...action.payload
         },
+      }
+
+    case SUBSCRIBE_CHANNEL_EVENT:
+      return {
+        ...state,
+        channels: [ ...state.channels, action.payload]
+      }
+
+    case UNSUBSCRIBE_CHANNEL_EVENT:
+      return {
+        ...state,
+        channels: state.channels.filter(i => action.payload !== i)
       }
       
     default: return state
