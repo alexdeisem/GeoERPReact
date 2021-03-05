@@ -15,7 +15,7 @@ const initialState = {
     number: '1',
     contract_date: '2007-01-01',
     end_date: '2007-02-01',
-    status: 'новый'
+    status: 'new'
   }],
   channels: [],
   tblPagintaion: {

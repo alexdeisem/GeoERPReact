@@ -16,21 +16,25 @@ function StatusCell(props) {
   }
 
   const formats = {
-    'новый': {
+    'new': {
       icon: <PlusCircleOutlined/>,
-      color: 'processing'
+      color: 'processing',
+      label: 'новый',
     },
-    'в работе': {
+    'in_work': {
       icon: <HistoryOutlined/>,
-      color: 'warning'
+      color: 'warning',
+      label: 'в работе',
     },
-    'выполнен': {
+    'completed': {
       icon: <CheckCircleOutlined/>,
-      color: 'success'
+      color: 'success',
+      label: 'выполнен',
     },
-    'отменен': {
+    'canceled': {
       icon: <CloseCircleOutlined/>,
-      color: 'error'
+      color: 'error',
+      label: 'отменен',
     }
   }
 
@@ -39,7 +43,7 @@ function StatusCell(props) {
       onClick={ item => handleStatusChange(item.key) }
     >
       {Object.keys(formats).map((status) => 
-        <Menu.Item key={status} icon={formats[status].icon}>{status}</Menu.Item>
+        <Menu.Item key={status} icon={formats[status].icon}>{formats[status].label}</Menu.Item>
       )}
     </Menu>
   );
@@ -64,7 +68,7 @@ function StatusCell(props) {
           color={formats[props.value].color}
           icon={formats[props.value].icon}
         >
-          {props.value}
+          {formats[props.value].label}
         </Tag>
       </Col>
       <Col flex="none">

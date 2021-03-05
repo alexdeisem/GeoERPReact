@@ -152,10 +152,10 @@ export function ContractsTable() {
     const formFilters = {
       ...filters,
       statuses: [
-        filters.new && 'новый',
-        filters.in_work && 'в работе',
-        filters.complete && 'выполнен',
-        filters.cancel && 'отменен',
+        filters.new && 'new',
+        filters.in_work && 'in_work',
+        filters.complete && 'completed',
+        filters.cancel && 'canceled',
       ].filter(i => i)
     }
 
