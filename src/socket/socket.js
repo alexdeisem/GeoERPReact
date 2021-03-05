@@ -10,10 +10,11 @@ const echo = new Echo({
     wsHost: 'geoerp.api',
     wsPort: 6001,
     forceTLS: false,
+    authEndpoint: 'http://geoerp.api/api/broadcasting/auth',
     auth: {
       headers: {
         Authorization: `Bearer ${token}`
-      }
+      },
     }
 });
 

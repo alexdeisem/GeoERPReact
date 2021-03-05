@@ -88,7 +88,7 @@ export const getContracts = (params={}) => {
 };
 
 export const subscribeChannelEvent = (eventName, handler) => {
-  echo.channel('contracts')
+  echo.private('contracts')
     .listen(eventName, handler);
   return {
     type: SUBSCRIBE_CHANNEL_EVENT,
