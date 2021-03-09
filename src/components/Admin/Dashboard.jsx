@@ -1,3 +1,4 @@
+import { Route } from 'react-router-dom';
 import { SubMenu } from './SubMenu';
 import { ContractsTable } from '../Tables/ContractsTable';
 import { 
@@ -7,11 +8,12 @@ import {
   LineChartOutlined, 
   OrderedListOutlined 
 } from '@ant-design/icons';
+import { ContractCreate } from '../Forms';
 
 const menu = [
   {
     label: 'Договоры',
-    url: '/admin/dashboard',
+    url: '/admin/dashboard/contracts',
     icon: <FileWordOutlined />,
   },
   {
@@ -42,7 +44,12 @@ export function Dashboard(props) {
     <div>
       <SubMenu menu={menu} />
       <div style={{padding: '8px'}}>
-        <ContractsTable />
+        <Route path="/admin/dashboard/contracts">
+          <ContractsTable />
+        </Route>
+        <Route path="/admin/dashboard/new-contract">
+          <ContractCreate />
+        </Route>
       </div>
     </div>
   )

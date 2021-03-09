@@ -103,3 +103,18 @@ export const unsubscribeChannelEvent = (eventName) => {
     payload: eventName
   };
 };
+
+export const getNextNumber = (year='') => {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      axios.get(`contracts/numbers/next/${year}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+  }
+}

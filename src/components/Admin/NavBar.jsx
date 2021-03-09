@@ -15,7 +15,7 @@ export function NavBar(props) {
   const items = [
     {
       label: 'Dashboard',
-      url: '/admin/dashboard',
+      url: '/admin/dashboard/contracts',
       icon: <DesktopOutlined />
     },
     {

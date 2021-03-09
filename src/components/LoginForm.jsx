@@ -18,7 +18,7 @@ export function LoginForm(props) {
       login(values)
     ).then((isAdmin) => {
       if (isAdmin) {
-        props.history.push('/admin/dashboard');
+        props.history.push('/admin/dashboard/contracts');
       } else {
         props.history.push('/home');
       }
