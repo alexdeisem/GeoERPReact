@@ -6,8 +6,8 @@ import {
   PlusCircleOutlined, 
   SearchOutlined
 } from '@ant-design/icons';
-import { WorkTypesSelect } from './WorkTypesSelect';
-import { StatusSwitch } from '../StatusSwitch';
+import { WorkTypesMultiSelect } from 'components/Forms/FormItems';
+import { StatusSwitch } from 'components/StatusSwitch';
 import { TotalContractsSum } from './TotalContractsSum';
 
 export function ContractsFilters(props) {
@@ -54,7 +54,7 @@ export function ContractsFilters(props) {
             name="work_types"
             initialValue={props.values.work_types}
           >
-            <WorkTypesSelect initialValues={props.values.work_types}/>
+            <WorkTypesMultiSelect initialValues={props.values.work_types}/>
           </Form.Item>
         </Col>
 

@@ -1,11 +1,11 @@
 import { Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchWorkTypes } from '../../store/workTypes/workTypesActions';
+import { fetchWorkTypes } from 'store/workTypes/workTypesActions';
 
 const { Option } = Select;
 
-export function WorkTypesSelect(props) {
+export function WorkTypesMultiSelect(props) {
   const [loading, setLoading] = useState(false);
   const workTypes = useSelector(state => state.workTypes.workTypes);
   const [options, setOptions] = useState([]);
