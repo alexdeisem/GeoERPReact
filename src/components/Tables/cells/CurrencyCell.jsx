@@ -1,4 +1,4 @@
-import { formatNumberAsCurrency } from '../../../helpers';
+import { formatNumberAsCurrency } from 'helpers';
 
 function CurrencyCell(props) {
   const formatNum = (number) => {

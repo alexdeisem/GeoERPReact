@@ -6,6 +6,7 @@ import {
   update,
 } from 'store/contracts/contractsActions';
 import { Dashboard } from './Dashboard';
+import { Settings } from './Settings';
 import { NavBar } from './NavBar';
 
 export function Admin() {
@@ -29,6 +30,10 @@ export function Admin() {
 
         <Route path="/admin/employees">
           <p>Сотрудники</p>
+        </Route>
+
+        <Route path="/admin/settings">
+          <Settings />
         </Route>
       </div>
     </div>       

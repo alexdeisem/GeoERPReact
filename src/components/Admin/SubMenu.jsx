@@ -12,7 +12,7 @@ export function SubMenu(props) {
       icon={item.icon}
     >
       <Link to={item.url}>
-        {item.label }
+        {item.label}
       </Link>
     </Menu.Item>  
   )

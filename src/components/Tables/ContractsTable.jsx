@@ -9,7 +9,7 @@ import {
   setContractsTblDefaultSorting,
   setContractsTblFilters,
 } from 'store/contracts/contractsActions';
-import { ContractsFilters } from './ContractsFilters';
+import { ContractsFilters } from './filters';
 import { DateCell, CurrencyCell, StatusCell } from './cells';
 
 export function ContractsTable() {
@@ -151,6 +151,7 @@ export function ContractsTable() {
   useEffect(() => {
     const formFilters = {
       ...filters,
+      year: filters.year === true ? 'year' : null,
       statuses: [
         filters.new && 'new',
         filters.in_work && 'in_work',

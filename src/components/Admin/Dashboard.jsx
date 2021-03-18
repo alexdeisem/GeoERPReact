@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom';
 import { SubMenu } from './SubMenu';
-import { ContractsTable } from '../Tables/ContractsTable';
+import { ContractsTable } from 'components/Tables';
 import { 
   CreditCardOutlined, 
   FileAddOutlined, 

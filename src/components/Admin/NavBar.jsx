@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
-import { DesktopOutlined, FileTextOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
+import { DesktopOutlined, FileTextOutlined, SettingOutlined, TagOutlined, TeamOutlined } from '@ant-design/icons';
 
 import { Brand } from '../Brand';
 import { ProfileButton } from '../ProfileButton';
@@ -9,9 +9,6 @@ import { MenuItem } from './MenuItem';
 import '../../scss/NavBar.scss';
 
 export function NavBar(props) {
-
-  const [active, setActive] = useState('Dashboard');
-
   const items = [
     {
       label: 'Dashboard',
@@ -38,7 +35,16 @@ export function NavBar(props) {
       url: '/admin/employees',
       icon: <TagOutlined />
     },
+    {
+      label: 'Настройки',
+      url: '/admin/settings',
+      icon: <SettingOutlined />
+    },
   ]
+
+  const [active, setActive] = useState(
+    items.filter(item => item.url === window.location.pathname)[0].label
+  );
 
   const menuItems = items.map((item, index) => 
     <Link to={item.url} key={index}>

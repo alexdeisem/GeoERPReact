@@ -1,4 +1,4 @@
-import { formatNumberAsCurrency } from '../../helpers';
+import { formatNumberAsCurrency } from 'helpers';
 
 export function TotalContractsSum(props) {
   return (
